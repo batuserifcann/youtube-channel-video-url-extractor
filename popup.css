@@ -57,6 +57,33 @@ p {
   gap: 8px;
 }
 
+.limit-field {
+  display: grid;
+  grid-template-columns: 1fr 120px;
+  align-items: center;
+  gap: 10px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.limit-field input {
+  width: 100%;
+  min-height: 36px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--ink);
+  font: inherit;
+  outline: none;
+  padding: 7px 9px;
+}
+
+.limit-field input:focus {
+  border-color: #a9a395;
+  box-shadow: 0 0 0 3px rgba(200, 30, 30, 0.12);
+}
+
 button {
   min-height: 38px;
   border: 1px solid transparent;

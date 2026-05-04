@@ -18,6 +18,19 @@
         <button id="copyBtn" type="button" disabled>Copy</button>
       </div>
 
+      <label class="limit-field" for="limitInput">
+        <span>Video limit</span>
+        <input
+          id="limitInput"
+          type="number"
+          inputmode="numeric"
+          min="1"
+          max="10000"
+          step="1"
+          placeholder="All"
+        />
+      </label>
+
       <div class="status" id="status">Ready</div>
 
       <textarea

@@ -11,6 +11,7 @@ The extension is intentionally simple: it reads links from the page you are alre
 ## Features
 
 - Collects YouTube video URLs from a channel's `Videos` tab.
+- Supports an optional video limit, such as collecting only the first 50 loaded videos.
 - Keeps one URL per line.
 - Removes duplicate video links.
 - Copies the final list to your clipboard.
@@ -39,9 +40,10 @@ This extension is not packaged in the Chrome Web Store. Load it locally:
 2. Go to that channel's `Videos` tab.
 3. Sort the videos in YouTube if you need a specific order, for example oldest to newest.
 4. Click the extension icon.
-5. Click `Collect links`.
-6. Keep the tab open while the extension scrolls and loads videos.
-7. Click `Copy`.
+5. Optionally enter a video limit, for example `50`.
+6. Click `Collect links`.
+7. Keep the tab open while the extension scrolls and loads videos.
+8. Click `Copy`.
 
 The output will look like this:
 

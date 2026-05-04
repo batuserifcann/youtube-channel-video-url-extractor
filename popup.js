@@ -3,6 +3,7 @@ const copyBtn = document.querySelector("#copyBtn");
 const output = document.querySelector("#output");
 const statusEl = document.querySelector("#status");
 const pageHint = document.querySelector("#pageHint");
+const limitInput = document.querySelector("#limitInput");
 
 let collectedText = "";
 
@@ -56,6 +57,18 @@ async function sendToContentScript(tabId, message) {
   }
 }
 
+function getVideoLimit() {
+  const rawValue = limitInput.value.trim();
+  if (!rawValue) return null;
+
+  const limit = Number.parseInt(rawValue, 10);
+  if (!Number.isInteger(limit) || limit < 1) {
+    throw new Error("Video limit must be a positive number.");
+  }
+
+  return Math.min(limit, 10000);
+}
+
 async function collectLinks() {
   const tab = await getActiveTab();
 
@@ -67,11 +80,18 @@ async function collectLinks() {
   collectBtn.disabled = true;
   copyBtn.disabled = true;
   output.value = "";
-  setStatus("Collecting... keep this tab open.");
 
   try {
+    const limit = getVideoLimit();
+    setStatus(
+      limit
+        ? `Collecting up to ${limit} link(s)... keep this tab open.`
+        : "Collecting all links... keep this tab open."
+    );
+
     const response = await sendToContentScript(tab.id, {
-      type: "COLLECT_YOUTUBE_VIDEO_URLS"
+      type: "COLLECT_YOUTUBE_VIDEO_URLS",
+      limit
     });
 
     if (!response?.ok) {

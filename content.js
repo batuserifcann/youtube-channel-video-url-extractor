@@ -52,7 +52,7 @@ if (!globalThis.__youtubeUrlExtractorV2Initialized) {
     return isChannelPage() && parts.at(-1) === "videos";
   };
 
-  const scrollAndCollect = async () => {
+  const scrollAndCollect = async (limit) => {
     if (!isChannelVideosPage()) {
       throw new Error("Open this channel's Videos tab first.");
     }
@@ -64,6 +64,7 @@ if (!globalThis.__youtubeUrlExtractorV2Initialized) {
 
     for (let round = 0; round < 1200; round += 1) {
       for (const url of getVisibleVideoUrls()) urls.add(url);
+      if (limit && urls.size >= limit) break;
 
       const height = Math.max(
         document.documentElement.scrollHeight,
@@ -85,7 +86,8 @@ if (!globalThis.__youtubeUrlExtractorV2Initialized) {
       await delay(700);
     }
 
-    return Array.from(urls);
+    const collectedUrls = Array.from(urls);
+    return limit ? collectedUrls.slice(0, limit) : collectedUrls;
   };
 
   chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
@@ -98,7 +100,11 @@ if (!globalThis.__youtubeUrlExtractorV2Initialized) {
 
     globalThis.__youtubeUrlExtractorState.running = true;
 
-    scrollAndCollect()
+    const limit = Number.isInteger(message.limit) && message.limit > 0
+      ? message.limit
+      : null;
+
+    scrollAndCollect(limit)
       .then((urls) => sendResponse({ ok: true, urls }))
       .catch((error) =>
         sendResponse({
