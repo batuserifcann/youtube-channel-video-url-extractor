@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>YouTube URL Extractor</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <header>
+        <h1>Video URLs</h1>
+        <p id="pageHint">Open a YouTube channel videos page.</p>
+      </header>
+
+      <div class="controls">
+        <button id="collectBtn" type="button">Collect links</button>
+        <button id="copyBtn" type="button" disabled>Copy</button>
+      </div>
+
+      <div class="status" id="status">Ready</div>
+
+      <textarea
+        id="output"
+        spellcheck="false"
+        placeholder="Collected links will appear here..."
+      ></textarea>
+    </main>
+
+    <script src="popup.js"></script>
+  </body>
+</html>
